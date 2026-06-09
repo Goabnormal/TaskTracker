@@ -232,7 +232,7 @@ const AuthForm = ({ setUser }) => {
         </p>
 
         <p className="text-center text-muted small mt-3">
-          &copy; {new Date().getFullYear()} Go Abnormal technologies. All rights
+          &copy; {new Date().getFullYear()} Go Abnormal. All rights
           reserved.
         </p>
       </Card>
