@@ -81,7 +81,7 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-import logo from "./Images/stratify-logo.png";
+import logo from "./Images/Goabnormal-logo.png";
 const XIcon = () => (
   <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -197,7 +197,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
     setRefreshing(true);
     try {
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec?function=doOtherUserGet&employeeId=${user.employeeId}`
+        `https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec?function=doOtherUserGet&employeeId=${user.employeeId}`
       );
       const text = await response.text();
 
@@ -324,7 +324,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -378,7 +378,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
     } = values;
     // console.log("Values:", values);
     const formData = new URLSearchParams();
-    formData.append("action", "st006UpdateTask");
+    formData.append("action", "GO003UpdateTask");
     formData.append("rowIndex", rowIndex); // 🔑 critical value
     formData.append("workType", workType);
     formData.append("clientName", clientName);
@@ -411,7 +411,7 @@ formData.append(
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -1418,7 +1418,7 @@ formData.append(
             <div>
               <img
                 src={logo}
-                alt="stratify logo"
+                alt="goAbnormal logo"
                 height="50"
                 className="ms-2"
               />

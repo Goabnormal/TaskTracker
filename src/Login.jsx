@@ -13,7 +13,7 @@ import { Container, Card, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/reset.css";
 import "./App.css";
-import logo from "./Images/stratify-logo.png";
+import logo from "./Images/Goabnormal-logo.png";
 
 const AuthForm = ({ setUser }) => {
   const [form] = Form.useForm();
@@ -33,7 +33,7 @@ const AuthForm = ({ setUser }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -76,7 +76,7 @@ const AuthForm = ({ setUser }) => {
         <div className="d-flex justify-content-center mb-3">
           <img
             src={logo}
-            alt="Stratify Technologies Logo"
+            alt="Go abnormal Logo"
             style={{ maxWidth: "180px" }}
           />
         </div>
@@ -131,7 +131,7 @@ const AuthForm = ({ setUser }) => {
 
             <Form.Item
               name="mailid"
-              rules={[{ required: true, message: "Please enter your stratify email id", 
+              rules={[{ required: true, message: "Please enter your go abnormal email id", 
                 pattern:
                 /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message:
@@ -140,7 +140,7 @@ const AuthForm = ({ setUser }) => {
             >
               <Input
                 prefix={<MailOutlined />}
-                placeholder="Stratify Email Id"
+                placeholder="Go abnormal Email Id"
                 size="large"
               />
             </Form.Item>
@@ -232,7 +232,7 @@ const AuthForm = ({ setUser }) => {
         </p>
 
         <p className="text-center text-muted small mt-3">
-          &copy; {new Date().getFullYear()} Stratify technologies. All rights
+          &copy; {new Date().getFullYear()} Go Abnormal technologies. All rights
           reserved.
         </p>
       </Card>

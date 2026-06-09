@@ -68,7 +68,7 @@ import {
   faEnvelope,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import logo from "./Images/stratify-logo.png";
+import logo from "./Images/Goabnormal-logo.png";
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 import {
@@ -106,7 +106,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
   const [showLogout, setShowLogout] = useState(false);
   const [form] = Form.useForm();
   const [Defaultform] = Form.useForm();
-  const [ST006form] = Form.useForm();
+  const [GO003form] = Form.useForm();
   const [editForm] = Form.useForm();
   const [otherEditForm] = Form.useForm();
   const [loadingEmployeeData, setLoadingEmployeeData] = useState(false);
@@ -154,7 +154,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
   const fetchEmployeeIds = async () => {
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec?mode=dropdown"
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec?mode=dropdown"
       );
       const data = await response.json();
       // console.log("fetchEmployeeIds:", data);
@@ -174,7 +174,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
       setLoadingEmployeeData(true);
       setSelectedEmployee(employeeId);
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec?employeeId=${employeeId}`
+        `https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec?employeeId=${employeeId}`
       );
       const data = await response.json();
       // console.log("fetchEmployeeData:", data);
@@ -204,7 +204,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
       setLoadingEmployeeAllData(true);
       // setSelectedEmployee(employeeId);
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec?mode=allTasks`
+        `https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec?mode=allTasks`
       );
       const data = await response.json();
       // console.log("fetchEmployeeAllData:", data);
@@ -247,7 +247,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
     setExportAllEmployeeExcel(true);
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: {
@@ -352,7 +352,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
   };
 
   const formattedData = employeeData.map((item, index) => {
-    if (selectedEmployee === "ST006") {
+    if (selectedEmployee === "GO003") {
       return {
         key: index,
         rowIndex: item.rowIndex,
@@ -528,7 +528,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
     }
   };
   const getColumns = (employeeId) => {
-    if (employeeId === "ST006") {
+    if (employeeId === "GO003") {
       return [
         {
           title: "Work Type",
@@ -954,7 +954,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
   //   } = values;
   //   console.log("Values:", values);
   //   const formData = new URLSearchParams();
-  //   formData.append("action", "st006UpdateTask");
+  //   formData.append("action", "GO003UpdateTask");
 
   //   formData.append("rowIndex", rowIndex);
   //   formData.append("workType", workType);
@@ -1712,7 +1712,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -1723,7 +1723,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
       const result = await response.json();
       if (result.success) {
         message.success("Task Assigned Successfully!");
-        ST006form.resetFields();
+        GO003form.resetFields();
         Defaultform.resetFields();
         setStartDateTime(null);
         setEndDateTime(null);
@@ -1787,7 +1787,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -1798,7 +1798,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
       const result = await response.json();
       if (result.success) {
         message.success("Task Assigned Successfully!");
-        ST006form.resetFields();
+        GO003form.resetFields();
         Defaultform.resetFields();
         setStartDateTime(null);
         setEndDateTime(null);
@@ -1815,7 +1815,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
   // useEffect(() => {
   //   const empId = form.getFieldValue("empId");
   //   setDropdownEmployeeId(empId);
-  // }, [ST006form.getFieldValue("empId")]);
+  // }, [GO003form.getFieldValue("empId")]);
 
   // const handleEmployeeChange = (value) => {
   //   form.resetFields();
@@ -1824,24 +1824,24 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
   // };
   useEffect(() => {
     if (dropdownEmployeeId) {
-      ST006form.resetFields();
+      GO003form.resetFields();
       Defaultform.resetFields();
-      ST006form.setFieldsValue({ empId: dropdownEmployeeId });
+      GO003form.setFieldsValue({ empId: dropdownEmployeeId });
       Defaultform.setFieldsValue({ empId: dropdownEmployeeId });
     }
   }, [dropdownEmployeeId]);
 
   // useEffect(() => {
-  //   if (dropdownEmployeeId === "ST006") {
+  //   if (dropdownEmployeeId === "GO003") {
   //     Defaultform.resetFields();
   //   } else {
-  //     ST006form.resetFields();
+  //     GO003form.resetFields();
   //   }
   // }, [dropdownEmployeeId]);
 
   useEffect(() => {
     if (!isDrawerVisible) {
-      ST006form.resetFields();
+      GO003form.resetFields();
       Defaultform.resetFields();
       setDropdownEmployeeId(undefined);
       setStartDateTime(null);
@@ -1971,7 +1971,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
             <div>
               <img
                 src={logo}
-                alt="stratify logo"
+                alt="Goabnormal logo"
                 height="50"
                 className="ms-2"
               />
@@ -2470,10 +2470,10 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
               width={1200}
               zIndex={1200}
             >
-              {dropdownEmployeeId === "ST006" ? (
+              {dropdownEmployeeId === "GO003" ? (
                 <Form
                   layout="vertical"
-                  form={ST006form}
+                  form={GO003form}
                   onFinish={(values) => handleSubmit(values, user)}
                   initialValues={{
                     employeeId: user?.employeeId || undefined,
@@ -2754,7 +2754,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
                         className=" px-5 py-2 ms-2"
                         size="large"
                         onClick={() => {
-                          ST006form.resetFields();
+                          GO003form.resetFields();
                           Defaultform.resetFields();
                           message.success("Form data cleared successfully");
                         }}
@@ -3021,7 +3021,7 @@ const Admin = ({ username, setUser, user, designation, mailid }) => {
                         className=" px-5 py-2 ms-2"
                         size="large"
                         onClick={() => {
-                          ST006form.resetFields();
+                          GO003form.resetFields();
                           Defaultform.resetFields();
                         }}
                       >

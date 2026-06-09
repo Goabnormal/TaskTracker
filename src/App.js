@@ -12,7 +12,7 @@ function App() {
     <div>
       {user?.employeeId === "ST001" || user?.employeeId === "ST002" ? (
         <Admin username={user.username} setUser={setUser} user={user} />
-      ) : user?.employeeId === "ST006" ? (
+      ) : user?.employeeId === "GO003" ? (
         <MithranTracker username={user.username} designation={user.designation} mailid={user.mailid} setUser={setUser} user={user} />
       ) : user ? (
         <OtherUser username={user.username} designation={user.designation} mailid={user.mailid} setUser={setUser} user={user} />

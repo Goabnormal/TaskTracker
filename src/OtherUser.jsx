@@ -72,7 +72,7 @@ import {
   Container,
   Progress,
 } from "react-bootstrap";
-import logo from "./Images/stratify-logo.png";
+import logo from "./Images/Goabnormal-logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -206,7 +206,7 @@ const OtherUser = ({ username, setUser, user }) => {
     setRefreshing(true);
     try {
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec?function=doOtherUserGet&employeeId=${user.employeeId}`
+        `https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec?function=doOtherUserGet&employeeId=${user.employeeId}`
       );
 
       const text = await response.text();
@@ -321,7 +321,7 @@ const OtherUser = ({ username, setUser, user }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -392,7 +392,7 @@ const OtherUser = ({ username, setUser, user }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwp5orEoK-YK-iBdeBFoE7KalnVtl99dn-amQtc2durFc2umCPHhuN1RIZtHjy7tLFsLw/exec",
+        "https://script.google.com/macros/s/AKfycbyC52YnZEQyob4DxwmjmksD5hSgGtr84k65DYC8Vugfp_ysEumNygQWPk35VhAUOKxAdw/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -1266,7 +1266,7 @@ const OtherUser = ({ username, setUser, user }) => {
             <div>
               <img
                 src={logo}
-                alt="stratify logo"
+                alt="goAbnormal logo"
                 height="50"
                 className="ms-2"
               />
