@@ -62,7 +62,7 @@ import {
   BarChartOutlined,
   TableOutlined,
   EyeOutlined,
-  OrderedListOutlined 
+  OrderedListOutlined,
 } from "@ant-design/icons";
 import {
   Button as BootstrapButton,
@@ -80,10 +80,8 @@ import {
   faSuitcase,
   faEnvelope,
   faXmarkCircle,
-  
 } from "@fortawesome/free-solid-svg-icons";
 import timezone from "dayjs/plugin/timezone";
-
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor">
@@ -138,6 +136,10 @@ const OtherUser = ({ username, setUser, user }) => {
   const [endDateFilter, setEndDateFilter] = useState(null);
   const [viewingTask, setViewingTask] = useState(null);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
+
+  const [startDateLocked, setStartDateLocked] = useState(false);
+  const [endDateLocked, setEndDateLocked] = useState(false);
+
   const onFormChange = (changedValues, allValues) => {
     setEditingRecord((prev) => ({
       ...prev,
@@ -158,7 +160,7 @@ const OtherUser = ({ username, setUser, user }) => {
 
   const handleSave = () => {
     const updatedData = formattedData.map((item) =>
-      item.key === editingRecord.key ? editingRecord : item
+      item.key === editingRecord.key ? editingRecord : item,
     );
 
     // Update the source, if it's coming from props/state
@@ -206,7 +208,7 @@ const OtherUser = ({ username, setUser, user }) => {
     setRefreshing(true);
     try {
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbxo_g1bST4Nnb5RRBlms9fF1cqg97Wr3ryxPSYFa0hGjkXRli7-hvW5ke2IEHKFf6cfow/exec?function=doOtherUserGet&employeeId=${user.employeeId}`
+        `https://script.google.com/macros/s/AKfycbxo_g1bST4Nnb5RRBlms9fF1cqg97Wr3ryxPSYFa0hGjkXRli7-hvW5ke2IEHKFf6cfow/exec?function=doOtherUserGet&employeeId=${user.employeeId}`,
       );
 
       const text = await response.text();
@@ -309,11 +311,11 @@ const OtherUser = ({ username, setUser, user }) => {
     // formData.append("endDateTime", endDateTime.toISOString());
     formData.append(
       "startDateTime",
-      dayjs(startDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss")
+      dayjs(startDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss"),
     );
     formData.append(
       "endDateTime",
-      dayjs(endDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss")
+      dayjs(endDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss"),
     );
     formData.append("status", status);
     formData.append("assigned", assigned);
@@ -326,7 +328,7 @@ const OtherUser = ({ username, setUser, user }) => {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: formData.toString(),
-        }
+        },
       );
 
       const result = await response.json();
@@ -335,7 +337,10 @@ const OtherUser = ({ username, setUser, user }) => {
         form.resetFields();
         setStartDateTime(null);
         setEndDateTime(null);
+        setStartDateLocked(false);
+                          setEndDateLocked(false);
         fetchData();
+        
       } else {
         message.error(`Error: ${result.error || "Unknown error"}`);
       }
@@ -380,11 +385,11 @@ const OtherUser = ({ username, setUser, user }) => {
     // formData.append("endDateTime", endDateTime.toISOString());
     formData.append(
       "startDateTime",
-      dayjs(startDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss")
+      dayjs(startDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss"),
     );
     formData.append(
       "endDateTime",
-      dayjs(endDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss")
+      dayjs(endDateTime).tz(userTimeZone).format("YYYY-MM-DDTHH:mm:ss"),
     );
     formData.append("status", status);
     formData.append("assigned", assigned);
@@ -397,7 +402,7 @@ const OtherUser = ({ username, setUser, user }) => {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: formData.toString(),
-        }
+        },
       );
 
       const result = await response.json();
@@ -461,12 +466,12 @@ const OtherUser = ({ username, setUser, user }) => {
           clientName: cleanedItem["Client/Task Name"]?.trim(),
           startDateTime: cleanedItem["Start Date & Time"]
             ? dayjs(cleanedItem["Start Date & Time"]).format(
-                "YYYY-MM-DD HH:mm:ss"
+                "YYYY-MM-DD HH:mm:ss",
               )
             : "-",
           endDateTime: cleanedItem["End Date & Time"]
             ? dayjs(cleanedItem["End Date & Time"]).format(
-                "YYYY-MM-DD HH:mm:ss"
+                "YYYY-MM-DD HH:mm:ss",
               )
             : "-",
           duration:
@@ -498,7 +503,7 @@ const OtherUser = ({ username, setUser, user }) => {
     setSearchText(""); // ✅ Clear search text
     setIsSearchActive(false);
     setSelectedStatus((prev) =>
-      prev === statusMapping[key] ? null : statusMapping[key]
+      prev === statusMapping[key] ? null : statusMapping[key],
     );
   };
   const handleSearchChange = (e) => {
@@ -625,7 +630,7 @@ const OtherUser = ({ username, setUser, user }) => {
   });
 
   const dateWiseChartData = Object.values(groupedByDate).sort(
-    (a, b) => new Date(a.date) - new Date(b.date)
+    (a, b) => new Date(a.date) - new Date(b.date),
   );
 
   const filteredChartData =
@@ -645,7 +650,7 @@ const OtherUser = ({ username, setUser, user }) => {
       item["Not Started"] > 0 ||
       item["Work in Progress"] > 0 ||
       item["Under Review"] > 0 ||
-      item.Hold > 0
+      item.Hold > 0,
   );
 
   const handleExport = () => {
@@ -729,7 +734,7 @@ const OtherUser = ({ username, setUser, user }) => {
     XLSX.utils.book_append_sheet(
       workbook,
       worksheet,
-      `${employeeId}-${username}`
+      `${employeeId}-${username}`,
     );
 
     const excelBuffer = XLSX.write(workbook, {
@@ -835,27 +840,27 @@ const OtherUser = ({ username, setUser, user }) => {
       key: "action",
       width: 200,
       fixed: "right",
-      render: (_, record) => (<>
-        <Button
-          color="primary"
-          variant="filled"
-          onClick={() => handleEdit(record, record.rowIndex)}
-        >
-          <EditOutlined />
-          Edit
-        </Button>
+      render: (_, record) => (
+        <>
+          <Button
+            color="primary"
+            variant="filled"
+            onClick={() => handleEdit(record, record.rowIndex)}
+          >
+            <EditOutlined />
+            Edit
+          </Button>
 
-        <Button
-        color="purple"
-        variant="filled"
-        onClick={() => handleView(record, record.rowIndex)}
-        className="ms-1"
-      >
-        <EyeOutlined />
-        View
-      </Button>
+          <Button
+            color="purple"
+            variant="filled"
+            onClick={() => handleView(record, record.rowIndex)}
+            className="ms-1"
+          >
+            <EyeOutlined />
+            View
+          </Button>
         </>
-        
       ),
     },
   ];
@@ -869,7 +874,7 @@ const OtherUser = ({ username, setUser, user }) => {
       endDateTime: dayjs(record.endDateTime),
     });
   };
-  
+
   const handleView = (record, index) => {
     const data = {
       ...record,
@@ -877,15 +882,14 @@ const OtherUser = ({ username, setUser, user }) => {
       startDateTime: dayjs(record.startDateTime),
       endDateTime: dayjs(record.endDateTime),
     };
-  
+
     // console.log("Viewing task:", data);
-  
+
     setViewingTask(data);
     viewForm.setFieldsValue(data); // make sure this happens after data is stable
-    setIsViewModalVisible(true);  // open modal last
+    setIsViewModalVisible(true); // open modal last
   };
-  
-  
+
   const getTaskStats = () => {
     if (!tableData || tableData.length === 0) {
       return {
@@ -921,7 +925,7 @@ const OtherUser = ({ username, setUser, user }) => {
     // Count occurrences of each status
     statuses.forEach((status) => {
       stats[status] = tableData.filter(
-        (item) => item["Status"] === status
+        (item) => item["Status"] === status,
       ).length;
     });
 
@@ -1328,7 +1332,10 @@ const OtherUser = ({ username, setUser, user }) => {
                     <span className="ms-2">{employeeMail}</span>
                   </div>
 
-                  <div className="logout-action mt-3 mb-2" onClick={handleLogout}>
+                  <div
+                    className="logout-action mt-3 mb-2"
+                    onClick={handleLogout}
+                  >
                     <LogoutOutlined style={{ marginRight: "6px" }} />
                     <span>Logout</span>
                   </div>
@@ -1397,6 +1404,14 @@ const OtherUser = ({ username, setUser, user }) => {
                           >
                             <DatePicker
                               showTime
+                              inputReadOnly
+                              disabled={startDateLocked}
+                              popupClassName="hide-time-panel hide-ok-btn"
+                              onChange={(value) => {
+                                if (value) {
+                                  setStartDateLocked(true);
+                                }
+                              }}
                               style={{ width: "100%" }}
                               size="large"
                             />
@@ -1421,15 +1436,15 @@ const OtherUser = ({ username, setUser, user }) => {
                                   if (
                                     !value ||
                                     value.isAfter(
-                                      getFieldValue("startDateTime")
+                                      getFieldValue("startDateTime"),
                                     )
                                   ) {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
                                     new Error(
-                                      "End date must be after start date"
-                                    )
+                                      "End date must be after start date",
+                                    ),
                                   );
                                 },
                               }),
@@ -1437,6 +1452,14 @@ const OtherUser = ({ username, setUser, user }) => {
                           >
                             <DatePicker
                               showTime
+                              inputReadOnly
+                              disabled={endDateLocked}
+                              popupClassName="hide-time-panel hide-ok-btn"
+                              onChange={(value) => {
+                                if (value) {
+                                  setEndDateLocked(true);
+                                }
+                              }}
                               style={{ width: "100%" }}
                               size="large"
                             />
@@ -1571,6 +1594,8 @@ const OtherUser = ({ username, setUser, user }) => {
                         size="large"
                         onClick={() => {
                           form.resetFields();
+                          setStartDateLocked(false);
+                          setEndDateLocked(false);
                           message.success("Form data cleared successfully");
                         }}
                       >
@@ -1677,7 +1702,9 @@ const OtherUser = ({ username, setUser, user }) => {
                   <div className="d-flex align-items-center justify-content-center flex-wrap gap-3">
                     {/* Icon and Title */}
                     <div className="d-flex align-items-center">
-                      <TableOutlined style={{ fontSize: "24px", marginRight: "10px" }} />
+                      <TableOutlined
+                        style={{ fontSize: "24px", marginRight: "10px" }}
+                      />
                       <span className="gradient-text">
                         {employeeId} - {username}'s Task Report
                       </span>
@@ -1685,7 +1712,6 @@ const OtherUser = ({ username, setUser, user }) => {
 
                     {/* Centered Search Bar */}
                     <div className="flex-grow-1 d-flex justify-content-center">
-                     
                       <div>
                         <DatePicker
                           placeholder="Start Date"
@@ -1700,7 +1726,9 @@ const OtherUser = ({ username, setUser, user }) => {
                               date &&
                               date.isAfter(endDateFilter, "day") // Compare with day precision
                             ) {
-                              message.error("Start date cannot be after end date.");
+                              message.error(
+                                "Start date cannot be after end date.",
+                              );
                             }
                           }}
                           // disabled={isSearchActive || selectedStatus !== null}
@@ -1720,7 +1748,9 @@ const OtherUser = ({ username, setUser, user }) => {
                               date &&
                               date.isBefore(startDateFilter, "day") // Compare with day precision
                             ) {
-                              message.error("End date cannot be before start date.");
+                              message.error(
+                                "End date cannot be before start date.",
+                              );
                             }
                           }}
                           style={{ marginRight: 16 }}
@@ -1892,7 +1922,7 @@ const OtherUser = ({ username, setUser, user }) => {
                 <Form
                   layout="vertical"
                   form={viewForm}
-                  
+
                   // onFinish={(values) => handleUpdate(values, user)}
                 >
                   <Form.Item name="rowIndex" hidden>
@@ -1937,8 +1967,11 @@ const OtherUser = ({ username, setUser, user }) => {
                           >
                             <DatePicker
                               showTime
-                              style={{ width: "100%" }}
+                              inputReadOnly
+                              popupClassName="hide-time-panel hide-ok-btn"
                               size="large"
+                              style={{ width: "100%" }}
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -1961,15 +1994,15 @@ const OtherUser = ({ username, setUser, user }) => {
                                   if (
                                     !value ||
                                     value.isAfter(
-                                      getFieldValue("startDateTime")
+                                      getFieldValue("startDateTime"),
                                     )
                                   ) {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
                                     new Error(
-                                      "End date must be after start date"
-                                    )
+                                      "End date must be after start date",
+                                    ),
                                   );
                                 },
                               }),
@@ -1977,8 +2010,11 @@ const OtherUser = ({ username, setUser, user }) => {
                           >
                             <DatePicker
                               showTime
-                              style={{ width: "100%" }}
+                              inputReadOnly
+                              popupClassName="hide-time-panel hide-ok-btn"
                               size="large"
+                              style={{ width: "100%" }}
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2029,30 +2065,24 @@ const OtherUser = ({ username, setUser, user }) => {
                       <Form.Item
                         label={
                           <span>
-                             <ClockCircleOutlined /> Duration
+                            <ClockCircleOutlined /> Duration
                           </span>
                         }
                         name="duration"
                       >
-                        <Input
-                          rows={1}
-                          size="large"
-                        />
+                        <Input rows={1} size="large" />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
                       <Form.Item
                         label={
                           <span>
-                       <OrderedListOutlined /> Total Count
+                            <OrderedListOutlined /> Total Count
                           </span>
                         }
                         name="totalCount"
                       >
-                        <Input
-                          rows={1}
-                          size="large"
-                        />
+                        <Input rows={1} size="large" />
                       </Form.Item>
                     </Col>
 
@@ -2124,7 +2154,6 @@ const OtherUser = ({ username, setUser, user }) => {
                         />
                       </Form.Item>
                     </Col>
-                    
                   </Row>
                 </Form>
               </Modal>
@@ -2185,8 +2214,11 @@ const OtherUser = ({ username, setUser, user }) => {
                           >
                             <DatePicker
                               showTime
-                              style={{ width: "100%" }}
+                              inputReadOnly
+                              popupClassName="hide-time-panel hide-ok-btn"
                               size="large"
+                              style={{ width: "100%" }}
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2209,15 +2241,15 @@ const OtherUser = ({ username, setUser, user }) => {
                                   if (
                                     !value ||
                                     value.isAfter(
-                                      getFieldValue("startDateTime")
+                                      getFieldValue("startDateTime"),
                                     )
                                   ) {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
                                     new Error(
-                                      "End date must be after start date"
-                                    )
+                                      "End date must be after start date",
+                                    ),
                                   );
                                 },
                               }),
@@ -2225,8 +2257,11 @@ const OtherUser = ({ username, setUser, user }) => {
                           >
                             <DatePicker
                               showTime
-                              style={{ width: "100%" }}
+                              inputReadOnly
+                              popupClassName="hide-time-panel hide-ok-btn"
                               size="large"
+                              style={{ width: "100%" }}
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2366,8 +2401,6 @@ const OtherUser = ({ username, setUser, user }) => {
                 </Form>
               </Modal>
             </Col>
-
-         
           </Row>
         </Content>
       </Layout>

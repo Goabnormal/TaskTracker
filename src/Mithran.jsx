@@ -51,7 +51,7 @@ import {
   BarChartOutlined,
   TableOutlined,
   EyeOutlined,
-  OrderedListOutlined 
+  OrderedListOutlined,
 } from "@ant-design/icons";
 import {
   Button as BootstrapButton,
@@ -126,6 +126,8 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
   const [viewingTask, setViewingTask] = useState(null);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [viewForm] = Form.useForm();
+  const [startDateLocked, setStartDateLocked] = useState(false);
+  const [endDateLocked, setEndDateLocked] = useState(false);
   const employeeDesignation = user?.designation;
   const employeeMail = user?.mailid;
   const getSocialMediaIcon = (type) => {
@@ -197,7 +199,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
     setRefreshing(true);
     try {
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbxo_g1bST4Nnb5RRBlms9fF1cqg97Wr3ryxPSYFa0hGjkXRli7-hvW5ke2IEHKFf6cfow/exec?function=doOtherUserGet&employeeId=${user.employeeId}`
+        `https://script.google.com/macros/s/AKfycbxo_g1bST4Nnb5RRBlms9fF1cqg97Wr3ryxPSYFa0hGjkXRli7-hvW5ke2IEHKFf6cfow/exec?function=doOtherUserGet&employeeId=${user.employeeId}`,
       );
       const text = await response.text();
 
@@ -311,11 +313,11 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
       formData.append("socialMediaType", "");
       formData.append(
         "startDateTime",
-        startDateTime ? startDateTime.toISOString() : ""
+        startDateTime ? startDateTime.toISOString() : "",
       );
       formData.append(
         "endDateTime",
-        endDateTime ? endDateTime.toISOString() : ""
+        endDateTime ? endDateTime.toISOString() : "",
       );
     }
     formData.append("status", status);
@@ -329,7 +331,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: formData.toString(),
-        }
+        },
       );
 
       const result = await response.json();
@@ -339,6 +341,8 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
         setDateTime(null);
         setStartDateTime(null);
         setEndDateTime(null);
+        setStartDateLocked(false);
+        setEndDateLocked(false);
         fetchData();
       } else {
         message.error(`Error: ${result.error || "Unknown error"}`);
@@ -387,22 +391,23 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
     formData.append("dateTime", formattedDateTime || "N/A");
 
     if (workType === "Social Media") {
-formData.append(
-  "socialMediaType",
-  Array.isArray(values.socialMediaType)
-    ? values.socialMediaType.join(",")
-    : ""
-);      formData.append("startDateTime", "");
+      formData.append(
+        "socialMediaType",
+        Array.isArray(values.socialMediaType)
+          ? values.socialMediaType.join(",")
+          : "",
+      );
+      formData.append("startDateTime", "");
       formData.append("endDateTime", "");
     } else {
       formData.append("socialMediaType", "");
       formData.append(
         "startDateTime",
-        startDateTime ? startDateTime.toISOString() : ""
+        startDateTime ? startDateTime.toISOString() : "",
       );
       formData.append(
         "endDateTime",
-        endDateTime ? endDateTime.toISOString() : ""
+        endDateTime ? endDateTime.toISOString() : "",
       );
     }
     formData.append("status", status);
@@ -416,7 +421,7 @@ formData.append(
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: formData.toString(),
-        }
+        },
       );
 
       const result = await response.json();
@@ -477,7 +482,7 @@ formData.append(
     setSearchText(""); // ✅ Clear search text
     setIsSearchActive(false);
     setSelectedStatus((prev) =>
-      prev === statusMapping[key] ? null : statusMapping[key]
+      prev === statusMapping[key] ? null : statusMapping[key],
     );
   };
   const handleSearchChange = (e) => {
@@ -538,23 +543,24 @@ formData.append(
     }
 
     if (match && (startDateFilter || endDateFilter)) {
-      const taskStart = item.startDateTime !== "-" ? dayjs(item.startDateTime) : null;
-      const linkPosted = item.linkPostedDateTime !== "-" ? dayjs(item.linkPostedDateTime) : null;
-  
+      const taskStart =
+        item.startDateTime !== "-" ? dayjs(item.startDateTime) : null;
+      const linkPosted =
+        item.linkPostedDateTime !== "-" ? dayjs(item.linkPostedDateTime) : null;
+
       const isStartInRange =
         taskStart &&
         (!startDateFilter || !taskStart.isBefore(startDateFilter, "day")) &&
         (!endDateFilter || !taskStart.isAfter(endDateFilter, "day"));
-  
+
       const isLinkPostedInRange =
         linkPosted &&
         (!startDateFilter || !linkPosted.isBefore(startDateFilter, "day")) &&
         (!endDateFilter || !linkPosted.isAfter(endDateFilter, "day"));
-  
+
       // Only match if either the start date or the link posted date is in range
       match = isStartInRange || isLinkPostedInRange;
     }
-  
 
     return match;
   });
@@ -564,7 +570,6 @@ formData.append(
       const getValidDate = (item) => {
         const linkDate = item.linkPostedDateTime;
         const startDate = item.startDateTime;
-        
 
         // Use linkPostedDateTime if valid, else fallback to startDateTime
         const dateToUse = linkDate && linkDate !== "-" ? linkDate : startDate;
@@ -738,26 +743,27 @@ formData.append(
       key: "action",
       width: 200,
       fixed: "right",
-      render: (_, record) => (<>
-        <Button
-          color="primary"
-          variant="filled"
-          onClick={() => handleEdit(record, record.rowIndex)}
-        >
-          <EditOutlined />
-          Edit
-        </Button>
+      render: (_, record) => (
+        <>
+          <Button
+            color="primary"
+            variant="filled"
+            onClick={() => handleEdit(record, record.rowIndex)}
+          >
+            <EditOutlined />
+            Edit
+          </Button>
 
           <Button
-                color="purple"
-                variant="filled"
-                onClick={() => handleView(record, record.rowIndex)}
-                className="ms-1"
-              >
-                <EyeOutlined />
-                View
-              </Button>
-              </>
+            color="purple"
+            variant="filled"
+            onClick={() => handleView(record, record.rowIndex)}
+            className="ms-1"
+          >
+            <EyeOutlined />
+            View
+          </Button>
+        </>
       ),
     },
   ];
@@ -796,17 +802,17 @@ formData.append(
         record.linkPostedDateTime && record.linkPostedDateTime !== "-"
           ? dayjs(record.linkPostedDateTime)
           : null,
-            socialMediaType: record.socialMediaType
-    ? record.socialMediaType.split(',').map((item) => item.trim())
-    : [],
+      socialMediaType: record.socialMediaType
+        ? record.socialMediaType.split(",").map((item) => item.trim())
+        : [],
     });
     setWorkType(record.workType); // <-- IMPORTANT
-    // setLinkDateTime(record.dateTime || null); 
+    // setLinkDateTime(record.dateTime || null);
     setLinkDateTime(
-  record.linkPostedDateTime && record.linkPostedDateTime !== "-"
-    ? dayjs(record.linkPostedDateTime)
-    : null
-);
+      record.linkPostedDateTime && record.linkPostedDateTime !== "-"
+        ? dayjs(record.linkPostedDateTime)
+        : null,
+    );
     setStartDateTime(record.startDateTime || null);
     setEndDateTime(record.endDateTime || null);
 
@@ -815,17 +821,26 @@ formData.append(
 
   const handleView = (record, index) => {
     // console.log("Viewing task:", record);
-  
+
     // Prepare values
-    const startDate = record.startDateTime && record.startDateTime !== "-" ? dayjs(record.startDateTime) : null;
-    const endDate = record.endDateTime && record.endDateTime !== "-" ? dayjs(record.endDateTime) : null;
-    const linkPostedDateTime = record.linkPostedDateTime && record.linkPostedDateTime !== "-" ? dayjs(record.linkPostedDateTime) : null;
+    const startDate =
+      record.startDateTime && record.startDateTime !== "-"
+        ? dayjs(record.startDateTime)
+        : null;
+    const endDate =
+      record.endDateTime && record.endDateTime !== "-"
+        ? dayjs(record.endDateTime)
+        : null;
+    const linkPostedDateTime =
+      record.linkPostedDateTime && record.linkPostedDateTime !== "-"
+        ? dayjs(record.linkPostedDateTime)
+        : null;
 
     // console.log(dateTime);
-  
+
     // Set full record + index
     setViewingTask({ ...record, rowIndex: index });
-  
+
     // Fill view form
     viewForm.setFieldsValue({
       ...record,
@@ -833,7 +848,7 @@ formData.append(
       endDateTime: endDate,
       dateTime: linkPostedDateTime,
     });
-    
+
     // Optional state setters (if you're using them in the modal)
     setWorkType(record.workType || null);
     setLinkDateTime(dateTime || null);
@@ -843,7 +858,6 @@ formData.append(
     // Show modal
     setIsViewModalVisible(true);
   };
-  
 
   const getTaskStats = () => {
     if (!tableData || tableData.length === 0) {
@@ -879,7 +893,7 @@ formData.append(
 
     statuses.forEach((status) => {
       stats[status] = tableData.filter(
-        (item) => item["Status"] === status
+        (item) => item["Status"] === status,
       ).length;
     });
 
@@ -997,7 +1011,7 @@ formData.append(
     XLSX.utils.book_append_sheet(
       workbook,
       worksheet,
-      `${employeeId}-${username}`
+      `${employeeId}-${username}`,
     );
 
     const excelBuffer = XLSX.write(workbook, {
@@ -1374,7 +1388,7 @@ formData.append(
   });
 
   const dateWiseChartData = Object.values(groupedByDate).sort(
-    (a, b) => new Date(a.date) - new Date(b.date)
+    (a, b) => new Date(a.date) - new Date(b.date),
   );
 
   const filteredChartData =
@@ -1395,7 +1409,7 @@ formData.append(
       item["Not Started"] > 0 ||
       item["Work in Progress"] > 0 ||
       item["Under Review"] > 0 ||
-      item.Hold > 0
+      item.Hold > 0,
   );
 
   const handleDateRangeChange = (dates) => {
@@ -1528,7 +1542,10 @@ formData.append(
                     <span className="ms-2">{employeeMail}</span>
                   </div>
 
-                  <div className="logout-action mt-3 mb-2" onClick={handleLogout}>
+                  <div
+                    className="logout-action mt-3 mb-2"
+                    onClick={handleLogout}
+                  >
                     <LogoutOutlined style={{ marginRight: "6px" }} />
                     <span>Logout</span>
                   </div>
@@ -1700,10 +1717,26 @@ formData.append(
                               },
                             ]}
                           >
-                            <DatePicker
+                            {/* <DatePicker
                               showTime
                               value={startDateTime}
                               onChange={(value) => setStartDateTime(value)}
+                              style={{ width: "100%" }}
+                              size="large"
+                            /> */}
+
+                            <DatePicker
+                              showTime
+                              inputReadOnly
+                              popupClassName="hide-time-panel hide-ok-btn"
+                              disabled={startDateLocked}
+                              value={startDateTime}
+                              onChange={(value) => {
+                                if (value) {
+                                  setStartDateTime(value);
+                                  setStartDateLocked(true);
+                                }
+                              }}
                               style={{ width: "100%" }}
                               size="large"
                             />
@@ -1729,24 +1762,40 @@ formData.append(
                                   if (
                                     !value ||
                                     value.isAfter(
-                                      getFieldValue("startDateTime")
+                                      getFieldValue("startDateTime"),
                                     )
                                   ) {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
                                     new Error(
-                                      "End date & time must be after start date & time"
-                                    )
+                                      "End date & time must be after start date & time",
+                                    ),
                                   );
                                 },
                               }),
                             ]}
                           >
-                            <DatePicker
+                            {/* <DatePicker
                               showTime
                               value={endDateTime}
                               onChange={(value) => setEndDateTime(value)}
+                              style={{ width: "100%" }}
+                              size="large"
+                            /> */}
+
+                            <DatePicker
+                              showTime
+                              inputReadOnly
+                              popupClassName="hide-time-panel hide-ok-btn"
+                              disabled={endDateLocked}
+                              value={endDateTime}
+                              onChange={(value) => {
+                                if (value) {
+                                  setEndDateTime(value);
+                                  setEndDateLocked(true);
+                                }
+                              }}
                               style={{ width: "100%" }}
                               size="large"
                             />
@@ -1953,6 +2002,8 @@ formData.append(
                         size="large"
                         onClick={() => {
                           form.resetFields();
+                          setStartDateLocked(false);
+                          setEndDateLocked(false);
                           message.success("Form data cleared successfully");
                         }}
                       >
@@ -2069,7 +2120,6 @@ formData.append(
 
                     {/* Centered Search Bar */}
                     <div className="flex-grow-1 d-flex justify-content-center">
-                      
                       <div>
                         <DatePicker
                           placeholder="Start Date"
@@ -2085,7 +2135,7 @@ formData.append(
                               date.isAfter(endDateFilter, "day") // Compare with day precision
                             ) {
                               message.error(
-                                "Start date cannot be after end date."
+                                "Start date cannot be after end date.",
                               );
                             }
                           }}
@@ -2107,7 +2157,7 @@ formData.append(
                               date.isBefore(startDateFilter, "day") // Compare with day precision
                             ) {
                               message.error(
-                                "End date cannot be before start date."
+                                "End date cannot be before start date.",
                               );
                             }
                           }}
@@ -2454,6 +2504,7 @@ formData.append(
                               onChange={(value) => setStartDateTime(value)}
                               style={{ width: "100%" }}
                               size="large"
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2477,15 +2528,15 @@ formData.append(
                                   if (
                                     !value ||
                                     value.isAfter(
-                                      getFieldValue("startDateTime")
+                                      getFieldValue("startDateTime"),
                                     )
                                   ) {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
                                     new Error(
-                                      "End date & time must be after start date & time"
-                                    )
+                                      "End date & time must be after start date & time",
+                                    ),
                                   );
                                 },
                               }),
@@ -2497,6 +2548,7 @@ formData.append(
                               onChange={(value) => setEndDateTime(value)}
                               style={{ width: "100%" }}
                               size="large"
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2782,6 +2834,7 @@ formData.append(
                               disabled
                               style={{ width: "100%" }}
                               size="large"
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2809,6 +2862,7 @@ formData.append(
                               onChange={(value) => setStartDateTime(value)}
                               style={{ width: "100%" }}
                               size="large"
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2832,15 +2886,15 @@ formData.append(
                                   if (
                                     !value ||
                                     value.isAfter(
-                                      getFieldValue("startDateTime")
+                                      getFieldValue("startDateTime"),
                                     )
                                   ) {
                                     return Promise.resolve();
                                   }
                                   return Promise.reject(
                                     new Error(
-                                      "End date & time must be after start date & time"
-                                    )
+                                      "End date & time must be after start date & time",
+                                    ),
                                   );
                                 },
                               }),
@@ -2852,6 +2906,7 @@ formData.append(
                               onChange={(value) => setEndDateTime(value)}
                               style={{ width: "100%" }}
                               size="large"
+                              disabled={true}
                             />
                           </Form.Item>
                         </Col>
@@ -2970,8 +3025,6 @@ formData.append(
                         </Select>
                       </Form.Item>
                     </Col>
-
-                  
                   </Row>
                 </Form>
               </Modal>
