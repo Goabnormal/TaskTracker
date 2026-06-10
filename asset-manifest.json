@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/TaskTracker/static/css/main.894bcf5c.css",
-    "main.js": "/TaskTracker/static/js/main.a66d7018.js",
+    "main.css": "/TaskTracker/static/css/main.c40e48d5.css",
+    "main.js": "/TaskTracker/static/js/main.41d1264e.js",
     "static/js/453.225d8625.chunk.js": "/TaskTracker/static/js/453.225d8625.chunk.js",
     "static/media/Goabnormal-logo.png": "/TaskTracker/static/media/Goabnormal-logo.08c93843b3263c25a593.png",
     "index.html": "/TaskTracker/index.html",
-    "main.894bcf5c.css.map": "/TaskTracker/static/css/main.894bcf5c.css.map",
-    "main.a66d7018.js.map": "/TaskTracker/static/js/main.a66d7018.js.map",
+    "main.c40e48d5.css.map": "/TaskTracker/static/css/main.c40e48d5.css.map",
+    "main.41d1264e.js.map": "/TaskTracker/static/js/main.41d1264e.js.map",
     "453.225d8625.chunk.js.map": "/TaskTracker/static/js/453.225d8625.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.894bcf5c.css",
-    "static/js/main.a66d7018.js"
+    "static/css/main.c40e48d5.css",
+    "static/js/main.41d1264e.js"
   ]
 }
