@@ -180,6 +180,11 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
     }
   }, [linkDateTime, form]);
 
+  useEffect(() => {
+    setStartDateLocked(false);
+    setEndDateLocked(false);
+  }, []);
+
   const handleLogout = () => {
     setUser(null);
     message.info(`See you soon ${username}. Take care!`);
@@ -2002,6 +2007,8 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
                         size="large"
                         onClick={() => {
                           form.resetFields();
+                          setStartDateTime(null);
+                          setEndDateTime(null);
                           setStartDateLocked(false);
                           setEndDateLocked(false);
                           message.success("Form data cleared successfully");

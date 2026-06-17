@@ -158,6 +158,11 @@ const OtherUser = ({ username, setUser, user }) => {
     }
   }, [isModalVisible, editingRecord]);
 
+    useEffect(() => {
+      setStartDateLocked(false);
+      setEndDateLocked(false);
+    }, []);
+
   const handleSave = () => {
     const updatedData = formattedData.map((item) =>
       item.key === editingRecord.key ? editingRecord : item,
@@ -1594,6 +1599,8 @@ const OtherUser = ({ username, setUser, user }) => {
                         size="large"
                         onClick={() => {
                           form.resetFields();
+                          setStartDateTime(null);
+                          setEndDateTime(null);
                           setStartDateLocked(false);
                           setEndDateLocked(false);
                           message.success("Form data cleared successfully");
