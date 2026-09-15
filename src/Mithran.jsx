@@ -204,7 +204,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
     setRefreshing(true);
     try {
       const response = await fetch(
-        `https://script.google.com/macros/s/AKfycbype1XFbHNGaEjXA87RbQ8jkQTcKlePzmLXjZhHsyty4q374X6cME182JTe0tF1tGZN_w/exec?function=doOtherUserGet&employeeId=${user.employeeId}`,
+        `https://script.google.com/macros/s/AKfycby3wjFpNKtYqHi-CHA-kOx7GNdS_iCm4SpFE2-1AO-X02dDDHF-DxPdp3sVcARjWsSKYQ/exec?function=doOtherUserGet&employeeId=${user.employeeId}`,
       );
       const text = await response.text();
 
@@ -331,7 +331,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbype1XFbHNGaEjXA87RbQ8jkQTcKlePzmLXjZhHsyty4q374X6cME182JTe0tF1tGZN_w/exec",
+        "https://script.google.com/macros/s/AKfycby3wjFpNKtYqHi-CHA-kOx7GNdS_iCm4SpFE2-1AO-X02dDDHF-DxPdp3sVcARjWsSKYQ/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -421,7 +421,7 @@ const MithranTaskTracker = ({ username, setUser, user }) => {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbype1XFbHNGaEjXA87RbQ8jkQTcKlePzmLXjZhHsyty4q374X6cME182JTe0tF1tGZN_w/exec",
+        "https://script.google.com/macros/s/AKfycby3wjFpNKtYqHi-CHA-kOx7GNdS_iCm4SpFE2-1AO-X02dDDHF-DxPdp3sVcARjWsSKYQ/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
